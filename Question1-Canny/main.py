@@ -1,21 +1,10 @@
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
-import os
-from .canny_edge_detector import CannyEdgeDetector as ced
+
+import matplotlib.image as im
+from .canny_edge_detector import CannyEdgeDetector
 from skimage.color import rgb2gray
 
+img = im.imread("Sturdy_Lizard_Colored.jpg")
+img_g = rgb2gray(img)
 
-
-for i in range(1, 4):
-    img = mpimg.imread("Sturdy_Lizard_Colored.jpg")
-    img_g = rgb2gray(img)
-    detector = ced(sigma=i, kernel_size=3, low_threshold=0.1, high_threshold=0.25)
-    path = "Testing/lizard/testing_sigma"+str(i)
-    if(~os.path.isdir(path)):
-        os.mkdir(path)
-    img_final = detector.detect(img_g, True, path+"/")
-
-# Plot it
-# plt.imshow(img_final, 'gray')
-# plt.show()
-img
+detector = CannyEdgeDetector(sigma=1, kernel_size=3, low_threshold=0.05, high_threshold=0.15)
+img_final = detector.detect(img_g, True, "")
